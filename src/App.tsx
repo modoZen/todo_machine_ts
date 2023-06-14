@@ -25,7 +25,7 @@ const App:FC = () => {
 
   const [searchValue, setSearchValue] = useState<string>('');
 
-  console.log(`Los usuarios buscan pendientes de ${searchValue}`);
+  const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
 
   return (
     <>
@@ -39,8 +39,12 @@ const App:FC = () => {
       />
       <TodoList>
         {
-          todos.map(todo=>(
-            <TodoItem key={todo.text} text={todo.text} completed={todo.completed} />
+          searchedTodos.map(todo=>(
+            <TodoItem 
+              key={todo.text} 
+              text={todo.text} 
+              completed={todo.completed}
+            />
           ))
         }
       </TodoList>
