@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { TodoCounter } from './TodoCounter'
 import { TodoSearch } from './TodoSearch'
 import { TodoList } from './TodoList'
@@ -14,13 +14,32 @@ const defaultTodos = [
 
 const App:FC = () => {
 
+  const [todos, setTodos] = useState<{
+    text:string,
+    completed:boolean
+  }[]>(defaultTodos);
+
+  const completedTodos:number = todos.filter(todo=>todo.completed).length;
+
+  const totalTodos = todos.length;
+
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  console.log(`Los usuarios buscan pendientes de ${searchValue}`);
+
   return (
     <>
-      <TodoCounter completed={3} total={4} />
-      <TodoSearch />
+      <TodoCounter 
+        completed={completedTodos} 
+        total={totalTodos} 
+      />
+      <TodoSearch 
+        searchValue={searchValue} 
+        setSearchValue={setSearchValue} 
+      />
       <TodoList>
         {
-          defaultTodos.map(todo=>(
+          todos.map(todo=>(
             <TodoItem key={todo.text} text={todo.text} completed={todo.completed} />
           ))
         }

@@ -1,11 +1,15 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import './TodoSearch.css'
 
-const TodoSearch:FC = () => {
+interface Props {
+    searchValue: string,
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
 
-    const [searchValue, setSearchValue] = useState<string>('');
-
-    console.log(`Los usuarios buscan pendientes de ${searchValue}`);
+const TodoSearch:FC<Props> = ({
+    searchValue,
+    setSearchValue
+}) => {
 
     return (
        <input 
