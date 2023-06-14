@@ -1,10 +1,14 @@
 import { FC } from "react"
 
-const TodoItem:FC = () => {
+interface Props {
+  text:string
+}
+
+const TodoItem:FC<Props> = ( props ) => {
   return (
     <li>
       <span>V</span>
-      <p>Construir un app TODO con TS</p>
+      <p>{props.text}</p>
       <span>X</span>
     </li>
   )

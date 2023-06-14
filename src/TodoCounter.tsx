@@ -1,9 +1,14 @@
 import { FC } from "react";
 
-const TodoCounter:FC = () => {
+interface Props {
+    completed: number,
+    total: number
+}
+
+const TodoCounter:FC<Props> = ({ completed, total}) => {
 
     return (
-        <h1>Has completado 3 de 4</h1>
+        <h1>Has completado {completed} de {total}</h1>
     )
 }
 

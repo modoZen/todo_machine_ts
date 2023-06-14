@@ -6,16 +6,25 @@ import { TodoList } from './TodoList'
 import { TodoButton } from './TodoButton'
 import { TodoItem } from './TodoItem'
 
+const defaultTodos = [
+  { text: 'Construir un app TODO con TS', completed: true },
+  { text: 'Reunirme con lider front', completed: false },
+  { text: 'Reunirme con diseñador UI', completed: false },
+  { text: 'Subir mi PR', completed: false },
+];
+
 const App:FC = () => {
 
   return (
     <>
-      <TodoCounter />
+      <TodoCounter completed={3} total={4} />
       <TodoSearch />
       <TodoList>
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
+        {
+          defaultTodos.map(todo=>(
+            <TodoItem key={todo.text} text={todo.text} />
+          ))
+        }
       </TodoList>
       <TodoButton />
     </>
