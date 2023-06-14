@@ -27,6 +27,19 @@ const App:FC = () => {
 
   const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
 
+  const completeTodo = (text: string) =>{
+    const newTodos = todos.map(todo=>{
+      if(todo.text === text) todo.completed = !todo.completed;
+      return todo;
+    })
+    setTodos(newTodos)
+  }
+
+  const deleteTodo = (text: string) => {
+    const newTodos = todos.filter(todo=>todo.text !== text);
+    setTodos(newTodos);
+  }
+
   return (
     <>
       <TodoCounter 
@@ -44,6 +57,8 @@ const App:FC = () => {
               key={todo.text} 
               text={todo.text} 
               completed={todo.completed}
+              onComplete={()=>{completeTodo(todo.text)}}
+              onDelete={()=>{deleteTodo(todo.text)}}
             />
           ))
         }
