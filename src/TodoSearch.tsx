@@ -1,18 +1,20 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import './TodoSearch.css'
 
 const TodoSearch:FC = () => {
+
+    const [searchValue, setSearchValue] = useState<string>('');
+
+    console.log(`Los usuarios buscan pendientes de ${searchValue}`);
 
     return (
        <input 
         type="text" 
         className="TodoSearch" 
         placeholder="Ingresar nombre de tarea buscada" 
+        value={searchValue}
         onChange={(event)=>{
-            console.log('Escribiste en el search');
-            console.log(event);
-            console.log(event.target);
-            console.log(event.target.value);
+            setSearchValue(event.target.value)
         }}
     />
     )
