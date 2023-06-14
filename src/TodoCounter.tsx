@@ -1,4 +1,5 @@
 import { FC } from "react";
+import './TodoCounter.css'
 
 interface Props {
     completed: number,
@@ -8,7 +9,7 @@ interface Props {
 const TodoCounter:FC<Props> = ({ completed, total}) => {
 
     return (
-        <h1>Has completado {completed} de {total}</h1>
+        <h1 className="TodoCounter">Has completado <span>{completed}</span>  de <span>{total}</span></h1>
     )
 }
 

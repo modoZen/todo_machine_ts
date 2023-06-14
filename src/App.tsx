@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import './App.css'
 import { TodoCounter } from './TodoCounter'
 import { TodoSearch } from './TodoSearch'
 import { TodoList } from './TodoList'
@@ -22,7 +21,7 @@ const App:FC = () => {
       <TodoList>
         {
           defaultTodos.map(todo=>(
-            <TodoItem key={todo.text} text={todo.text} />
+            <TodoItem key={todo.text} text={todo.text} completed={todo.completed} />
           ))
         }
       </TodoList>

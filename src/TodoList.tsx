@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import './TodoList.css'
 
 interface Props {
     children : ReactNode
@@ -7,7 +8,7 @@ interface Props {
 const TodoList:FC<Props> = ({ children }) => {
 
     return (
-        <ul>
+        <ul className="TodoList">
             { children }
         </ul>
     )
