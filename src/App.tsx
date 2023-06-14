@@ -1,25 +1,27 @@
 import { FC } from 'react'
 import './App.css'
+import { TodoCounter } from './TodoCounter'
+import { TodoSearch } from './TodoSearch'
+import { TodoList } from './TodoList'
+import { TodoButton } from './TodoButton'
+import { TodoItem } from './TodoItem'
 
 const App:FC = () => {
 
   return (
     <>
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
+      <TodoCounter />
+      <TodoSearch />
+      <TodoList>
+        <TodoItem />
+        <TodoItem />
+        <TodoItem />
+      </TodoList>
+      <TodoButton />
     </>
   )
 }
 
-const TodoItem:FC = () => {
-  return (
-    <li>
-      <span>V</span>
-      <p>Construir un app TODO con TS</p>
-      <span>X</span>
-    </li>
-  )
-}
+
 
 export default App
