@@ -2,8 +2,8 @@ import { Dispatch, FC, SetStateAction } from "react";
 import './TodoSearch.css'
 
 interface Props {
-    searchValue: string,
-    setSearchValue: Dispatch<SetStateAction<string>>
+    searchValue?: string,
+    setSearchValue?: Dispatch<SetStateAction<string>>
 }
 
 const TodoSearch:FC<Props> = ({
@@ -18,7 +18,7 @@ const TodoSearch:FC<Props> = ({
         placeholder="Ingresar nombre de tarea buscada" 
         value={searchValue}
         onChange={(event)=>{
-            setSearchValue(event.target.value)
+            // setSearchValue(event.target.value)
         }}
     />
     )
