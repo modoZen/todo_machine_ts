@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useLocalStorege } from './useLocalStorage'
 import { AppUI } from './AppUI'
 
@@ -10,28 +10,15 @@ export interface ITodo {
 
 const App:FC = () => {
 
-  const [todos, saveTodos] = useLocalStorege<ITodo[]>('TODOS_V1', []);
+  const {
+    item: todos,
+    saveTodos,
+    loading,
+    error,
+  } = useLocalStorege<ITodo[]>('TODOS_V1', []);
 
   const completedTodos:number = todos.filter(todo=>todo.completed).length;
   const totalTodos:number = todos.length;
-
-  console.log('Log 1');
-
-  // useEffect(() => {
-  //   console.log('Loooooooog 2');
-  // });
-
-  // useEffect(() => {
-  //   console.log('Loooooooog 2');
-  // }, []);
-
-  useEffect(() => {
-    console.log('Loooooooog 2');
-  }, [totalTodos]);
-
-  console.log('Log 3');
-
-
   const [searchValue, setSearchValue] = useState<string>('');
 
   const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
@@ -58,6 +45,8 @@ const App:FC = () => {
       setSearchValue={setSearchValue}
       completeTodo={completeTodo}
       deleteTodo={deleteTodo}
+      loading={loading}
+      error={error}
     />
   )
 }

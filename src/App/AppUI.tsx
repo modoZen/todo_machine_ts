@@ -14,6 +14,8 @@ interface Props {
     setSearchValue: Dispatch<SetStateAction<string>>
     completeTodo: (v:string)=>void,
     deleteTodo: (v:string)=>void,
+    loading: boolean,
+    error: boolean
 }
 
 export const AppUI:FC<Props> = ({
@@ -23,10 +25,16 @@ export const AppUI:FC<Props> = ({
     searchValue,
     setSearchValue,
     completeTodo,
-    deleteTodo
+    deleteTodo,
+    loading,
+    error
 }) => {
   return (
     <>
+      {loading && <p>Estamos cargando...</p>}
+      {error && <p>Desespérate, hubo un error!!</p>}
+      {(!loading && searchedTodos.length === 0) && <p>¡Crea tu primer TODO!</p>}
+
       <TodoCounter 
         completed={completedTodos} 
         total={totalTodos} 

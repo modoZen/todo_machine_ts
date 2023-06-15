@@ -1,29 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const useLocalStorege = <T,>(itemName:string, initialValue:T): [T, (newTodos: T) => void] => {
-  
-    const localStorageTodos = localStorage.getItem(itemName);
+const useLocalStorege = <T,>(itemName:string, initialValue:T) => {
+
+    const [item, setItem] = useState<T>(initialValue);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            try {
+                const localStorageTodos = localStorage.getItem(itemName);
+                let parsedItem:T;
+                if(!localStorageTodos){
+                    localStorage.setItem(itemName, JSON.stringify(initialValue))
+                    parsedItem = initialValue
+                } else {
+                    parsedItem = JSON.parse(localStorageTodos) as T;
+                }
+                saveTodos(parsedItem);
+                setLoading(false);    
+            } catch (err) {
+                setError(true);
+            }
+        }, 2000);
+    }, [])
     
-    let parsedTodos:T;
-    
-    if(!localStorageTodos){
-        localStorage.setItem(itemName, JSON.stringify(initialValue))
-        parsedTodos = initialValue
-    } else {
-        parsedTodos = JSON.parse(localStorageTodos) as T;
-    }
-
-    const [item, setItem] = useState<T>(parsedTodos);
-
     const saveTodos = (newTodos:T) => {
         setItem(newTodos);
         localStorage.setItem(itemName, JSON.stringify(newTodos))
     }
 
-    return [
-    item,
-    saveTodos
-    ]
+    return {
+        item,
+        saveTodos,
+        loading,
+        error,
+    }
 
 }
 
