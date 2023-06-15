@@ -21,19 +21,36 @@ interface ITodo {
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 // localStorage.removeItem('TODOS_V1');
 
-const App:FC = () => {
-
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-
-  let parsedTodos:ITodo[] = [];
-
+const useLocalStorege = <T,>(itemName:string, initialValue:T): [T, (newTodos: T) => void] => {
+  
+  const localStorageTodos = localStorage.getItem(itemName);
+  
+  let parsedTodos:T;
+  
   if(!localStorageTodos){
-    localStorage.setItem('TODOS_V1', JSON.stringify([]))
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedTodos = initialValue
   } else {
-    parsedTodos = JSON.parse(localStorageTodos) as ITodo[];
+    parsedTodos = JSON.parse(localStorageTodos) as T;
   }
 
-  const [todos, setTodos] = useState<ITodo[]>(parsedTodos);
+  const [item, setItem] = useState<T>(parsedTodos);
+
+  const saveTodos = (newTodos:T) => {
+    setItem(newTodos);
+    localStorage.setItem(itemName, JSON.stringify(newTodos))
+  }
+
+  return [
+    item,
+    saveTodos
+  ]
+
+}
+
+const App:FC = () => {
+
+  const [todos, saveTodos] = useLocalStorege<ITodo[]>('TODOS_V1', []);
 
   const completedTodos:number = todos.filter(todo=>todo.completed).length;
 
@@ -42,11 +59,6 @@ const App:FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
-
-  const saveTodos = (newTodos:ITodo[]) => {
-    setTodos(newTodos);
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
-  }
 
   const completeTodo = (text: string) =>{
     const newTodos = todos.map(todo=>{
