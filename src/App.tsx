@@ -5,19 +5,35 @@ import { TodoList } from './TodoList'
 import { TodoButton } from './TodoButton'
 import { TodoItem } from './TodoItem'
 
-const defaultTodos = [
-  { text: 'Construir un app TODO con TS', completed: true },
-  { text: 'Reunirme con lider front', completed: false },
-  { text: 'Reunirme con diseñador UI', completed: false },
-  { text: 'Subir mi PR', completed: false },
-];
+
+interface ITodo {
+  text:string,
+  completed:boolean
+}
+
+// const defaultTodos = [
+//   { text: 'Construir un app TODO con TS', completed: true },
+//   { text: 'Reunirme con lider front', completed: false },
+//   { text: 'Reunirme con diseñador UI', completed: false },
+//   { text: 'Subir mi PR', completed: false },
+// ];
+
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
+// localStorage.removeItem('TODOS_V1');
 
 const App:FC = () => {
 
-  const [todos, setTodos] = useState<{
-    text:string,
-    completed:boolean
-  }[]>(defaultTodos);
+  const localStorageTodos = localStorage.getItem('TODOS_V1');
+
+  let parsedTodos:ITodo[] = [];
+
+  if(!localStorageTodos){
+    localStorage.setItem('TODOS_V1', JSON.stringify([]))
+  } else {
+    parsedTodos = JSON.parse(localStorageTodos) as ITodo[];
+  }
+
+  const [todos, setTodos] = useState<ITodo[]>(parsedTodos);
 
   const completedTodos:number = todos.filter(todo=>todo.completed).length;
 
@@ -27,17 +43,22 @@ const App:FC = () => {
 
   const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
 
+  const saveTodos = (newTodos:ITodo[]) => {
+    setTodos(newTodos);
+    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
+  }
+
   const completeTodo = (text: string) =>{
     const newTodos = todos.map(todo=>{
       if(todo.text === text) todo.completed = !todo.completed;
       return todo;
     })
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   const deleteTodo = (text: string) => {
     const newTodos = todos.filter(todo=>todo.text !== text);
-    setTodos(newTodos);
+    saveTodos(newTodos);
   }
 
   return (
