@@ -1,15 +1,19 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import './TodoButton.css'
 
-const TodoButton:FC = () => {
+
+
+const TodoButton:FC<{
+    setOpenModal: Dispatch<SetStateAction<boolean>>
+}> = ({
+    setOpenModal
+}) => {
 
     return (
         <button 
             className="TodoButton"
-            onClick={(event)=>{
-                console.log('le diste clic');
-                console.log(event);
-                console.log(event.target);
+            onClick={()=>{
+                setOpenModal((prevState)=>!prevState)
             }}
         >
             +

@@ -8,6 +8,7 @@ import { TodosError } from "../TodoError"
 import { EmptyTodos } from "../EmptyTodo"
 import { TodosLoading } from "../TodoLoading"
 import { TodoContext } from "../TodoContext"
+import { Modal } from "../Modal"
 
 export const AppUI:FC = () => {
 
@@ -17,6 +18,8 @@ export const AppUI:FC = () => {
     searchedTodos,
     completeTodo,
     deleteTodo,
+    openModal,
+    setOpenModal
   } = useContext(TodoContext);
 
   return (
@@ -45,7 +48,15 @@ export const AppUI:FC = () => {
         ))
       }
       </TodoList>
-      <TodoButton />
+      <TodoButton setOpenModal={setOpenModal} />
+
+      {
+        openModal && (
+          <Modal>
+            La funcionalidad de agregar TODO
+          </Modal>
+        )
+      }
     </>
   )
 }
