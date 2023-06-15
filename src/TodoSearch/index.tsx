@@ -1,15 +1,13 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC, useContext } from "react";
+import { TodoContext } from "../TodoContext";
 import './TodoSearch.css'
 
-interface Props {
-    searchValue?: string,
-    setSearchValue?: Dispatch<SetStateAction<string>>
-}
+const TodoSearch:FC = () => {
 
-const TodoSearch:FC<Props> = ({
-    searchValue,
-    setSearchValue
-}) => {
+    const {
+        searchValue,
+        setSearchValue
+    } = useContext(TodoContext)
 
     return (
        <input 
@@ -18,7 +16,7 @@ const TodoSearch:FC<Props> = ({
         placeholder="Ingresar nombre de tarea buscada" 
         value={searchValue}
         onChange={(event)=>{
-            // setSearchValue(event.target.value)
+            setSearchValue(event.target.value)
         }}
     />
     )
