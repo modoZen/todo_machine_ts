@@ -5,6 +5,9 @@ import { TodoCounter } from "../TodoCounter"
 import { TodoItem } from "../TodoItem"
 import { TodoList } from "../TodoList"
 import { TodoSearch } from "../TodoSearch"
+import { TodosError } from "../TodoError"
+import { EmptyTodos } from "../EmptyTodo"
+import { TodosLoading } from "../TodoLoading"
 
 interface Props {
     searchedTodos: ITodo[]
@@ -31,19 +34,25 @@ export const AppUI:FC<Props> = ({
 }) => {
   return (
     <>
-      {loading && <p>Estamos cargando...</p>}
-      {error && <p>Desespérate, hubo un error!!</p>}
-      {(!loading && searchedTodos.length === 0) && <p>¡Crea tu primer TODO!</p>}
 
       <TodoCounter 
         completed={completedTodos} 
         total={totalTodos} 
-      />
+        />
       <TodoSearch 
         searchValue={searchValue} 
         setSearchValue={setSearchValue} 
-      />
+        />
       <TodoList>
+        {loading && (
+          <>
+            <TodosLoading />
+            <TodosLoading />
+            <TodosLoading />
+          </>
+        )}
+        {error && <TodosError />}
+        {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
         {
           searchedTodos.map(todo=>(
             <TodoItem 
