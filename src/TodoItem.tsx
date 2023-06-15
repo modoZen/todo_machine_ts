@@ -1,4 +1,6 @@
 import { FC } from "react"
+import { BiCheckCircle } from 'react-icons/bi'
+import { TiDelete } from 'react-icons/ti'
 import './TodoItem.css'
 
 interface Props {
@@ -16,15 +18,19 @@ const TodoItem:FC<Props> = ({
 }) => {
   return (
     <li className="TodoItem">
-      <span 
+      {/* <span 
+      >V</span> */}
+      <BiCheckCircle
         className={`Icon Icon-check ${completed && "Icon-check--active"}`}
         onClick={onComplete}
-      >V</span>
+      />
       <p className={`TodoItem-p ${completed && "TodoItem-p--complete"}`}>{text}</p>
-      <span 
+      {/* <span 
+      >X</span> */}
+      <TiDelete 
         className="Icon Icon-delete"
         onClick={onDelete}
-      >X</span>
+      />
     </li>
   )
 }
