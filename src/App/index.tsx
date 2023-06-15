@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useLocalStorege } from './useLocalStorage'
 import { AppUI } from './AppUI'
 
@@ -13,8 +13,24 @@ const App:FC = () => {
   const [todos, saveTodos] = useLocalStorege<ITodo[]>('TODOS_V1', []);
 
   const completedTodos:number = todos.filter(todo=>todo.completed).length;
+  const totalTodos:number = todos.length;
 
-  const totalTodos = todos.length;
+  console.log('Log 1');
+
+  // useEffect(() => {
+  //   console.log('Loooooooog 2');
+  // });
+
+  // useEffect(() => {
+  //   console.log('Loooooooog 2');
+  // }, []);
+
+  useEffect(() => {
+    console.log('Loooooooog 2');
+  }, [totalTodos]);
+
+  console.log('Log 3');
+
 
   const [searchValue, setSearchValue] = useState<string>('');
 
