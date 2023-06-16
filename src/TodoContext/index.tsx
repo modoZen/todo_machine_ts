@@ -16,6 +16,7 @@ interface GlobalState {
     totalTodos: number,
     searchValue: string,
     setSearchValue: Dispatch<SetStateAction<string>>
+    addTodo: (v:string)=>void
     completeTodo: (v:string)=>void,
     deleteTodo: (v:string)=>void,
     loading: boolean,
@@ -43,6 +44,15 @@ const TodoProvider:FC<Props> = ({
       const [openModal, setOpenModal] = useState(false);
     
       const searchedTodos = todos.filter(todo=> todo.text.toLowerCase().includes(searchValue.toLowerCase()));
+
+      const addTodo = (text:string) => {
+        const newTodos = [...todos]
+        newTodos.push({
+          text,
+          completed: false
+        })
+        saveTodos(newTodos)
+      }
     
       const completeTodo = (text: string) =>{
         const newTodos = todos.map(todo=>{
@@ -64,6 +74,7 @@ const TodoProvider:FC<Props> = ({
             totalTodos,
             searchValue,
             setSearchValue,
+            addTodo,
             completeTodo,
             deleteTodo,
             loading,

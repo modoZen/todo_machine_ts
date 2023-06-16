@@ -9,6 +9,7 @@ import { EmptyTodos } from "../EmptyTodo"
 import { TodosLoading } from "../TodoLoading"
 import { TodoContext } from "../TodoContext"
 import { Modal } from "../Modal"
+import { TodoForm } from "../TodoForm"
 
 export const AppUI:FC = () => {
 
@@ -27,33 +28,33 @@ export const AppUI:FC = () => {
       <TodoCounter />
       <TodoSearch  />
       <TodoList>
-      {loading && (
-        <>
-          <TodosLoading />
-          <TodosLoading />
-          <TodosLoading />
-        </>
-      )}
-      {error && <TodosError />}
-      {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
-      {
-        searchedTodos.map(todo=>(
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={()=>{completeTodo(todo.text)}}
-            onDelete={()=>{deleteTodo(todo.text)}}
-          />
-        ))
-      }
+        {loading && (
+          <>
+            <TodosLoading />
+            <TodosLoading />
+            <TodosLoading />
+          </>
+        )}
+        {error && <TodosError />}
+        {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
+        {
+          searchedTodos.map(todo=>(
+            <TodoItem
+              key={todo.text}
+              text={todo.text}
+              completed={todo.completed}
+              onComplete={()=>{completeTodo(todo.text)}}
+              onDelete={()=>{deleteTodo(todo.text)}}
+            />
+          ))
+        }
       </TodoList>
       <TodoButton setOpenModal={setOpenModal} />
 
       {
         openModal && (
           <Modal>
-            La funcionalidad de agregar TODO
+            <TodoForm />
           </Modal>
         )
       }
