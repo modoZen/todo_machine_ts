@@ -1,13 +1,15 @@
-import { FC, useContext } from "react";
-import { TodoContext } from "../TodoContext";
-import './TodoSearch.css'
+import { FC, Dispatch, SetStateAction } from "react";
+import './TodoSearch.css';
 
-const TodoSearch:FC = () => {
+interface Props {
+    searchValue: string,
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
 
-    const {
-        searchValue,
-        setSearchValue
-    } = useContext(TodoContext)
+const TodoSearch:FC<Props> = ({
+    searchValue,
+    setSearchValue
+}) => {
 
     return (
        <input 

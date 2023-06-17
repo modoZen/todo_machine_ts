@@ -10,6 +10,7 @@ import { TodosLoading } from "../TodoLoading"
 import { TodoContext } from "../TodoContext"
 import { Modal } from "../Modal"
 import { TodoForm } from "../TodoForm"
+import { TodoHeader } from "../TodoHeader"
 
 export const AppUI:FC = () => {
 
@@ -20,13 +21,25 @@ export const AppUI:FC = () => {
     completeTodo,
     deleteTodo,
     openModal,
-    setOpenModal
+    setOpenModal,
+    completedTodos,
+    totalTodos,
+    searchValue,
+    setSearchValue,
   } = useContext(TodoContext);
 
   return (
     <>
-      <TodoCounter />
-      <TodoSearch  />
+      <TodoHeader>
+        <TodoCounter 
+          completedTodos={completedTodos}
+          totalTodos={totalTodos}
+        />
+        <TodoSearch  
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
+      </TodoHeader>
       <TodoList>
         {loading && (
           <>
