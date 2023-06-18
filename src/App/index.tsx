@@ -42,28 +42,31 @@ const App: FC = () => {
           setSearchValue={setSearchValue}
         />
       </TodoHeader>
-      <TodoList>
-        {loading && (
+      <TodoList
+        loading={loading}
+        error={error}
+        onLoading={()=>(
           <>
             <TodosLoading />
             <TodosLoading />
             <TodosLoading />
           </>
         )}
-        {error && <TodosError />}
-        {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
-        {
-          searchedTodos.map(todo => (
-            <TodoItem
-              key={todo.text}
-              text={todo.text}
-              completed={todo.completed}
-              onComplete={() => { completeTodo(todo.text) }}
-              onDelete={() => { deleteTodo(todo.text) }}
-            />
-          ))
-        }
-      </TodoList>
+        onError={()=>(
+          <TodosError />
+        )}
+        onEmpty={()=><EmptyTodos />}
+        searchedTodos={searchedTodos}
+        render={(todo) => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => { completeTodo(todo.text) }}
+            onDelete={() => { deleteTodo(todo.text) }}
+          />
+        )}
+      />
       <TodoButton setOpenModal={setOpenModal} />
 
       {
