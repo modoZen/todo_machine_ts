@@ -1,13 +1,15 @@
-import { FormEvent, useContext, useState } from "react"
-import { TodoContext } from "../TodoContext"
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react"
 import './TodoForm.css'
 
-const TodoForm = () =>{
+interface Props {
+    addTodo: (v:string)=>void,
+    setOpenModal: Dispatch<SetStateAction<boolean>>
+}
 
-    const {
-        addTodo,
-        setOpenModal
-    } = useContext(TodoContext);
+const TodoForm:FC<Props> = ({
+    addTodo,
+    setOpenModal
+}) =>{
 
     const [newTodoText, setNewTodoText] = useState('');
 

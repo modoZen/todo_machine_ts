@@ -1,4 +1,4 @@
-import { Dispatch, FC, ReactNode, SetStateAction, createContext, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useLocalStorege } from "./useLocalStorage";
 
 export interface ITodo {
@@ -6,9 +6,9 @@ export interface ITodo {
     completed:boolean
   }
 
-interface Props {
-    children: ReactNode
-}
+// interface Props {
+//     children: ReactNode
+// }
 
 interface GlobalState {
     searchedTodos: ITodo[]
@@ -25,11 +25,7 @@ interface GlobalState {
     setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const TodoContext = createContext<GlobalState>({} as GlobalState);
-
-const TodoProvider:FC<Props> = ({
-    children
-}) => {
+const useTodos = (): GlobalState => {
 
     const {
         item: todos,
@@ -67,24 +63,20 @@ const TodoProvider:FC<Props> = ({
         saveTodos(newTodos);
       }
 
-    return (
-        <TodoContext.Provider value={{
-            searchedTodos,
-            completedTodos,
-            totalTodos,
-            searchValue,
-            setSearchValue,
-            addTodo,
-            completeTodo,
-            deleteTodo,
-            loading,
-            error,
-            openModal,
-            setOpenModal,
-        }}>
-            {children}
-        </TodoContext.Provider>
-    )
+    return {
+      searchedTodos,
+      completedTodos,
+      totalTodos,
+      searchValue,
+      setSearchValue,
+      addTodo,
+      completeTodo,
+      deleteTodo,
+      loading,
+      error,
+      openModal,
+      setOpenModal,
+    }
 }
 
-export { TodoContext, TodoProvider }
+export { useTodos }
