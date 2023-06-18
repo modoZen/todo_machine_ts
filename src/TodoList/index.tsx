@@ -6,28 +6,37 @@ interface Props {
     loading: boolean,
     error: boolean,
     searchedTodos: ITodo[],
+    totalTodos:number,
     onError: ()=>ReactNode,
     onLoading: ()=>ReactNode,
     onEmpty:()=>ReactNode,
-    render: (value:ITodo)=>ReactNode,
+    render?:(value:ITodo)=>ReactNode,
+    searchText:string,
+    onEmptySearchResults:(value:string)=>ReactNode,
+    children:(todo:ITodo)=>ReactNode,
 }
 
 const TodoList:FC<Props> = ({
     loading,
     error,
     searchedTodos,
+    totalTodos,
     onLoading,
     onEmpty,
     onError,
-    render
+    render,
+    searchText,
+    onEmptySearchResults,
+    children,
 }) => {
 
     return (
         <ul className="TodoList">
             {loading && onLoading()}
             {error && onError()}
-            {(!loading && searchedTodos.length === 0) && onEmpty()}
-            { searchedTodos.map(render) }
+            {(!loading && !totalTodos) && onEmpty()}
+            {(!loading && totalTodos && !searchedTodos.length) && onEmptySearchResults(searchText) }
+            { searchedTodos.map(render || children)  }
         </ul>
     )
 }

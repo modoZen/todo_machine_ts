@@ -57,16 +57,33 @@ const App: FC = () => {
         )}
         onEmpty={()=><EmptyTodos />}
         searchedTodos={searchedTodos}
-        render={(todo) => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={() => { completeTodo(todo.text) }}
-            onDelete={() => { deleteTodo(todo.text) }}
-          />
-        )}
-      />
+        searchText={searchValue}
+        totalTodos={totalTodos}
+        onEmptySearchResults={
+          (searchText)=>(<p>No hay resultado para {searchText}</p>)
+        }
+        // render={(todo) => (
+        //   <TodoItem
+        //     key={todo.text}
+        //     text={todo.text}
+        //     completed={todo.completed}
+        //     onComplete={() => { completeTodo(todo.text) }}
+        //     onDelete={() => { deleteTodo(todo.text) }}
+        //   />
+        // )}
+      >
+        {
+          (todo) => (
+            <TodoItem
+              key={todo.text}
+              text={todo.text}
+              completed={todo.completed}
+              onComplete={() => { completeTodo(todo.text) }}
+              onDelete={() => { deleteTodo(todo.text) }}
+            />
+          )
+        }
+      </TodoList>1
       <TodoButton setOpenModal={setOpenModal} />
 
       {
