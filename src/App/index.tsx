@@ -32,14 +32,18 @@ const App: FC = () => {
 
   return (
     <>
-      <TodoHeader>
+      <TodoHeader
+        loading={loading}
+      >
         <TodoCounter
           completedTodos={completedTodos}
           totalTodos={totalTodos}
+          // loading={loading}
         />
         <TodoSearch
           searchValue={searchValue}
           setSearchValue={setSearchValue}
+          // loading={loading}
         />
       </TodoHeader>
       <TodoList
@@ -83,7 +87,7 @@ const App: FC = () => {
             />
           )
         }
-      </TodoList>1
+      </TodoList>
       <TodoButton setOpenModal={setOpenModal} />
 
       {

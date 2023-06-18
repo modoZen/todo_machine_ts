@@ -6,6 +6,10 @@
     font-weight: normal;
 }
 
+.TodoCounter--loading{
+    opacity: 25%;
+}
+
 .TodoCounter span {
     font-weight: bold;
 }

@@ -1,16 +1,18 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, Children, cloneElement, ReactElement } from "react";
 
 interface Props {
+    loading:boolean,
     children: ReactNode
 }
 
 const TodoHeader:FC<Props> = ({
+    loading,
     children
 }) => {
 
     return (
         <header>
-            { children }
+            { Children.toArray(children).map((child)=>cloneElement(child as ReactElement, { loading } )) }
         </header>
     )
 }
