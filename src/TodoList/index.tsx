@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { ITodo } from "../App/useTodos";
 import './TodoList.css'
 
-interface Props {
+interface CommonProps {
     loading: boolean,
     error: boolean,
     searchedTodos: ITodo[],
@@ -10,11 +10,19 @@ interface Props {
     onError: ()=>ReactNode,
     onLoading: ()=>ReactNode,
     onEmpty:()=>ReactNode,
-    render?:(value:ITodo)=>ReactNode,
     searchText:string,
     onEmptySearchResults:(value:string)=>ReactNode,
+}
+
+type ConditionalProps = {
+    render:(value:ITodo)=>ReactNode,
+    children?:never,
+} | {
+    render?:never,
     children:(todo:ITodo)=>ReactNode,
 }
+
+type Props = CommonProps & ConditionalProps
 
 const TodoList:FC<Props> = ({
     loading,
