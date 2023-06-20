@@ -44,7 +44,7 @@ const TodoList:FC<Props> = ({
             {error && onError()}
             {(!loading && !totalTodos) && onEmpty()}
             {(!loading && totalTodos && !searchedTodos.length) && onEmptySearchResults(searchText) }
-            { searchedTodos.map(render || children)  }
+            { !loading && searchedTodos.map(render || children)  }
         </ul>
     )
 }

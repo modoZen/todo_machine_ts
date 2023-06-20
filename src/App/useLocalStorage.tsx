@@ -5,6 +5,7 @@ const useLocalStorege = <T,>(itemName:string, initialValue:T) => {
     const [item, setItem] = useState<T>(initialValue);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [synchronizedItem , setSynchronizedItem] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {
@@ -17,24 +18,31 @@ const useLocalStorege = <T,>(itemName:string, initialValue:T) => {
                 } else {
                     parsedItem = JSON.parse(localStorageTodos) as T;
                 }
-                saveTodos(parsedItem);
-                setLoading(false);    
+                saveItem(parsedItem);
+                setLoading(false);
+                setSynchronizedItem(true);    
             } catch (err) {
                 setError(true);
             }
         }, 2000);
-    }, [])
+    }, [synchronizedItem])
     
-    const saveTodos = (newTodos:T) => {
+    const saveItem = (newTodos:T) => {
         setItem(newTodos);
         localStorage.setItem(itemName, JSON.stringify(newTodos))
     }
 
+    const sincronizeItem = () => {
+        setLoading(true);
+        setSynchronizedItem(false);
+    }
+
     return {
         item,
-        saveTodos,
+        saveItem,
         loading,
         error,
+        sincronizeItem,
     }
 
 }
