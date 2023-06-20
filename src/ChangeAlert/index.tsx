@@ -1,18 +1,14 @@
 import { FC } from 'react'
-import { withStorageListener } from "./withStorageListener"
+import { useStorageListener } from './useStorageListener'
 import './ChangeAlert.css'
 
 interface Props {
-    show: boolean,
-    toggleShow: ()=>void,
     sincronizeTodos:()=>void
 }
 
-const ChangeAlert:FC<Props> = ({
-    show,
-    toggleShow,
-    sincronizeTodos
-})=> {
+const ChangeAlert:FC<Props> = ({sincronizeTodos})=> {
+
+    const {show, toggleShow } = useStorageListener(sincronizeTodos);
 
     if(show){
         return(
@@ -22,10 +18,7 @@ const ChangeAlert:FC<Props> = ({
                     <p>¿Quieres sincronizar tus TODOs?</p>
                     <button
                         className="TodoForm-button TodoForm-button--add"
-                        onClick={()=>{
-                            toggleShow();
-                            sincronizeTodos();
-                        }}
+                        onClick={toggleShow}
                     >
                         Yes!
                     </button>
@@ -38,6 +31,4 @@ const ChangeAlert:FC<Props> = ({
     }
 }
 
-const ChangeAlertWithStorageListener = withStorageListener(ChangeAlert);
-
-export { ChangeAlertWithStorageListener }
+export { ChangeAlert }
